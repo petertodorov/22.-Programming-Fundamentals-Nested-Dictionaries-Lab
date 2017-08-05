@@ -1,0 +1,44 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+class GroupContinentsCountriesACities
+{
+    static void Main(string[] args)
+    {
+        SortedDictionary<string, SortedDictionary<string, SortedSet<string>>> continentsData  = new SortedDictionary<string, SortedDictionary<string, SortedSet<string>>>();
+        int n = int.Parse(Console.ReadLine());
+        for (int i = 0; i < n; i++)
+        {
+            string[] input = Console.ReadLine().Split(' ');
+            string continent = input[0];
+            string country = input[1];
+            string capital = input[2];
+            if (!continentsData.ContainsKey(continent))
+            {
+                continentsData.Add(continent, new SortedDictionary<string, SortedSet<string>>());
+            }
+            if (!continentsData[continent].ContainsKey(country))
+            {
+                continentsData[continent].Add(country, new SortedSet<string>());
+            }
+            continentsData[continent][country].Add(capital);
+        }
+     
+        foreach (var continent in continentsData)
+        {
+            string continentName = continent.Key;
+            Console.WriteLine($"{continentName}:");
+            SortedDictionary<string, SortedSet<string>> printing = continent.Value;
+            foreach (var item in printing)
+            {
+                string countryPrint = item.Key;
+                SortedSet<string> capitalPrint = item.Value;
+                Console.WriteLine($"{countryPrint} -> {string.Join(", ", capitalPrint)}");
+            }
+        }
+    }
+}
+
+
